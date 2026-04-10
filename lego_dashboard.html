@@ -175,6 +175,14 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
 .doc-year{font-size:11px;color:var(--text2);font-family:var(--font-text)}
 .doc-dl{font-size:13px;color:var(--secondary-dark);font-weight:700;font-family:var(--font-brand)}
 
+/* News */
+.news-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;cursor:pointer;border-radius:10px;transition:background .15s}
+.news-row:hover{background:var(--bg2)}
+.news-row:last-child{border-bottom:none}
+.news-tag{font-size:10px;font-weight:700;font-family:var(--font-brand);padding:3px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0;width:90px;text-align:center;margin-top:2px;letter-spacing:.2px}
+.news-title{font-size:13px;font-weight:500;color:var(--text1);line-height:1.4;font-family:var(--font-text)}
+.news-meta{font-size:11px;color:var(--text3);margin-top:3px;font-family:var(--font-text)}
+
 /* Self-service */
 .ss-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ss-btn{background:none;border:none;border-radius:14px;padding:10px 0;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:7px}
@@ -220,7 +228,7 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
 
 @media (max-width:900px){
   html,body{overflow:auto;height:auto}
-  .layout{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .layout,.layout.expanded{grid-template-columns:1fr;height:auto;min-height:100vh}
   .sidebar{position:fixed;left:-230px;top:0;bottom:0;width:230px;z-index:100;transition:left .28s cubic-bezier(.4,0,.2,1)}
   .sidebar.mobile-open{left:0}
   .main{padding:20px 18px;gap:28px}
@@ -235,9 +243,9 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
   .sec-metrics{order:1}
   .sec-metric-right{order:2}
   .sec-performance{order:3}
-  .sec-vertraege{order:4}
-  .sec-nachrichten{order:5}
-  .sec-zahlungen{order:6}
+  .sec-news{order:4}
+  .sec-vertraege{order:5}
+  .sec-nachrichten{order:6}
   .sec-dokumente{order:7}
   .card.bg{padding:20px}
   #chart-wrap{margin:0 -20px}
@@ -374,11 +382,11 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
       <div class="main-left">
       <!-- Metrics left (2 cards) -->
       <div class="metrics-left sec-metrics">
-        <div class="m-card navy">
+        <div class="m-card navy" style="cursor:pointer" onclick="location.href='vorsorge.html'">
           <div class="m-label">Gesamtschutz</div>
           <div class="m-value">312.500 €</div>
           <div class="m-sub">3 aktive Verträge</div>
-          <div class="m-badge">✓ Vollständig versichert</div>
+          <div class="m-badge" style="background:rgba(254,76,28,.18);color:#ff8a70">⚠ Lücke vorhanden</div>
         </div>
         <div class="m-card lime">
           <div class="m-label">Fondsguthaben</div>
@@ -390,7 +398,7 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
 
       <!-- Performance -->
       <div class="card bg sec-performance" style="overflow:hidden;padding-bottom:0">
-        <div class="card-title" style="padding-bottom:16px">Vermögensentwicklung</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:16px"><div class="card-title" style="margin-bottom:0">Vermögensentwicklung</div><span style="font-family:var(--font-brand);font-size:15px;font-weight:700;color:#15803d;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:100px;padding:4px 12px;letter-spacing:-.2px">↑ +4,2 %</span></div>
         <div id="chart-wrap" style="margin:0 -32px">
           <svg id="perf-svg" style="display:block;width:100%">
             <g id="chart-grid"></g>
@@ -408,33 +416,45 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
         </div>
       </div>
 
-      <!-- Zahlungen -->
-      <div class="card sec-zahlungen">
-        <div class="card-title">Zahlungen <span>nächste 60 Tage</span></div>
-        <div class="pay-row">
-          <div class="pay-icon" style="background:var(--bg3)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 5.5v5c0 4 3 7 7 7s7-3 7-7v-5L10 2z" stroke="#a8a6bc" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
-          <div><div class="pay-name">Risikolebensversicherung</div><div class="pay-date">01. Mai 2026 · Lastschrift</div></div>
-          <div class="pay-amt">89 €</div>
-        </div>
-        <div class="pay-row">
-          <div class="pay-icon" style="background:var(--bg3)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 14l4-4 3 2 4-5 3 2" stroke="#a8a6bc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div><div class="pay-name">Fondsgebundene LV</div><div class="pay-date">01. Mai 2026 · Lastschrift</div></div>
-          <div class="pay-amt">104 €</div>
-        </div>
-        <div class="pay-row">
-          <div class="pay-icon" style="background:var(--bg3)"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="#a8a6bc" stroke-width="1.4"/><path d="M3 17c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke="#a8a6bc" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-          <div><div class="pay-name">Berufsunfähigkeits-LV</div><div class="pay-date">01. Juni 2026 · Lastschrift</div></div>
-          <div class="pay-amt">35 €</div>
-        </div>
-      </div>
-
       <!-- Dokumente -->
-      <div class="card sec-dokumente">
-        <div class="card-title">Dokumente</div>
-        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresbescheinigung 2025</div><div class="doc-year">Steuer · Jan 2026</div></div><div class="doc-dl">↓</div></div>
-        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresbescheinigung 2024</div><div class="doc-year">Steuer · Jan 2025</div></div><div class="doc-dl">↓</div></div>
-        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Beitragsrechnung Q1 2026</div><div class="doc-year">Apr 2026</div></div><div class="doc-dl">↓</div></div>
-        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresübersicht 2025</div><div class="doc-year">Feb 2026</div></div><div class="doc-dl">↓</div></div>
+      <!-- News -->
+      <div class="card sec-news" style="background:var(--bg1);border:1px solid var(--border);border-radius:20px;padding:22px">
+        <div style="margin-bottom:16px"><div class="card-title" style="margin-bottom:6px">Newsfeed</div><div style="font-size:13.5px;color:var(--text2);font-family:var(--font-text)">Für Sie relevante Nachrichten auf Basis ihrer Vorsorgesituation</div></div>
+        <div class="news-row" onclick="location.href='#'">
+          <div class="news-tag" style="background:#fff7ed;color:#c2410c">Rohstoffe</div>
+          <div class="news-body">
+            <div class="news-title">Goldpreis erreicht neues Allzeithoch – Experten erwarten weitere Rallye</div>
+            <div class="news-meta">Financial Times · vor 2 Std.</div>
+          </div>
+        </div>
+        <div class="news-row" onclick="location.href='#'">
+          <div class="news-tag" style="background:#f0fdf4;color:#15803d">Altersvorsorge</div>
+          <div class="news-body">
+            <div class="news-title">Bundesregierung plant Reform der privaten Rentenversicherung ab 2027</div>
+            <div class="news-meta">Handelsblatt · vor 5 Std.</div>
+          </div>
+        </div>
+        <div class="news-row" onclick="location.href='#'">
+          <div class="news-tag" style="background:#fff7ed;color:#c2410c">Rohstoffe</div>
+          <div class="news-body">
+            <div class="news-title">Ölpreise steigen nach OPEC-Entscheidung – Auswirkungen auf Energiefonds</div>
+            <div class="news-meta">Reuters · vor 8 Std.</div>
+          </div>
+        </div>
+        <div class="news-row" onclick="location.href='#'">
+          <div class="news-tag" style="background:#eff6ff;color:#1d4ed8">Fonds</div>
+          <div class="news-body">
+            <div class="news-title">Fondsgebundene Lebensversicherungen: Steuerliche Vorteile 2026 im Überblick</div>
+            <div class="news-meta">FAZ · gestern</div>
+          </div>
+        </div>
+        <div class="news-row" style="border-bottom:none;margin-bottom:0;padding-bottom:0" onclick="location.href='#'">
+          <div class="news-tag" style="background:#fdf4ff;color:#7e22ce">Politik</div>
+          <div class="news-body">
+            <div class="news-title">EZB senkt Leitzins – Was das für Ihre Fondsrendite bedeutet</div>
+            <div class="news-meta">Süddeutsche Zeitung · gestern</div>
+          </div>
+        </div>
       </div>
 
       </div><!-- end left column -->
@@ -536,6 +556,14 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
         </div>
       </div>
 
+      <!-- Dokumente -->
+      <div class="card sec-dokumente">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div class="card-title" style="margin-bottom:0">Dokumente</div><span class="show-all" onclick="location.href='dokumente.html'">Alle anzeigen</span></div>
+        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresbescheinigung 2025</div><div class="doc-year">Steuer · Jan 2026</div></div><div class="doc-dl">↓</div></div>
+        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresbescheinigung 2024</div><div class="doc-year">Steuer · Jan 2025</div></div><div class="doc-dl">↓</div></div>
+        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Beitragsrechnung Q1 2026</div><div class="doc-year">Apr 2026</div></div><div class="doc-dl">↓</div></div>
+        <div class="doc-row" onclick="location.href='dokumente.html'"><div class="doc-icon">PDF</div><div><div class="doc-name">Jahresübersicht 2025</div><div class="doc-year">Feb 2026</div></div><div class="doc-dl">↓</div></div>
+      </div>
 
       </div><!-- end right column -->
     </div><!-- end main two-column layout -->

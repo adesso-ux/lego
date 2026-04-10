@@ -58,9 +58,9 @@ body{font-family:var(--font-text);color:var(--text1);font-size:13px}
 .page-sub{font-size:13px;color:var(--text2);margin-top:4px}
 
 /* Content split */
-.content-split{display:grid;grid-template-columns:1fr 420px;flex:1;overflow:hidden;gap:0;padding:0 34px 28px}
-.services-col{overflow-y:auto;padding-right:24px}
-.panel-col{overflow-y:auto}
+.content-split{display:grid;grid-template-columns:1fr 420px;flex:1;overflow:hidden;gap:0;padding:12px 28px 28px 34px}
+.services-col{overflow-y:auto;padding-right:24px;margin-top:-12px;padding-top:12px}
+.panel-col{overflow:visible;padding:0}
 
 /* Service section title */
 .service-section-title{font-family:var(--font-brand);font-size:14px;font-weight:700;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px;margin-top:28px}
@@ -122,7 +122,7 @@ select.fp-input{cursor:pointer;appearance:none;background-image:url("data:image/
 
 @media(max-width:900px){
   html,body{overflow:auto;height:auto}
-  .layout{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .layout,.layout.expanded{grid-template-columns:1fr;height:auto;min-height:100vh}
   .sidebar{position:fixed;left:-230px;top:0;bottom:0;width:230px;z-index:100;transition:left .28s cubic-bezier(.4,0,.2,1)}
   .sidebar.mobile-open{left:0}
   .hamburger{display:flex}
@@ -136,7 +136,7 @@ select.fp-input{cursor:pointer;appearance:none;background-image:url("data:image/
 </style>
 </head>
 <body>
-<div class="layout" id="layout">
+<div class="layout expanded" id="layout">
   <div class="sidebar">
     <div class="logo-area">
       <div class="logo-mark"><div class="logo-hex lh1"></div><div class="logo-hex lh2"></div><div class="logo-hex lh3"></div></div>
@@ -284,13 +284,9 @@ select.fp-input{cursor:pointer;appearance:none;background-image:url("data:image/
 
       <!-- Right: inline form panel -->
       <div class="panel-col">
-        <div class="form-panel" id="form-panel">
-          <div class="panel-empty" id="panel-empty">
-            <div class="panel-empty-icon">🛠️</div>
-            <div class="panel-empty-text">Service auswählen</div>
-            <div class="panel-empty-sub">Klicken Sie links auf einen Dienst, um das Formular zu öffnen.</div>
-          </div>
-          <div id="panel-content" style="display:none;flex:1;flex-direction:column;overflow:hidden;display:flex"></div>
+        <div class="form-panel" id="form-panel" style="display:none">
+          <div class="panel-empty" id="panel-empty" style="display:none"></div>
+          <div id="panel-content" style="display:none;flex:1;flex-direction:column;overflow:hidden"></div>
         </div>
       </div>
     </div>
@@ -501,6 +497,7 @@ function openPanel(key) {
   const def = panelDefs[key];
   activeService = key;
 
+  document.getElementById('form-panel').style.display = 'flex';
   document.getElementById('panel-empty').style.display = 'none';
   const content = document.getElementById('panel-content');
   content.style.display = 'flex';

@@ -144,7 +144,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 
 @media(max-width:900px){
   html,body{overflow:auto;height:auto}
-  .layout{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .layout,.layout.expanded{grid-template-columns:1fr;height:auto;min-height:100vh}
   .sidebar{position:fixed;left:-230px;top:0;bottom:0;width:230px;z-index:100;transition:left .28s cubic-bezier(.4,0,.2,1)}
   .sidebar.mobile-open{left:0}
   .hamburger{display:flex}
@@ -158,7 +158,7 @@ select.field-input{cursor:pointer;appearance:none;background-image:url("data:ima
 </style>
 </head>
 <body>
-<div class="layout" id="layout">
+<div class="layout expanded" id="layout">
   <div class="sidebar">
     <div class="logo-area">
       <div class="logo-mark"><div class="logo-hex lh1"></div><div class="logo-hex lh2"></div><div class="logo-hex lh3"></div></div>
